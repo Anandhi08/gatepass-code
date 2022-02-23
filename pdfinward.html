@@ -1,0 +1,185 @@
+{% load static %}
+<button  onclick="generatePDF()">Download PDF  </button>
+<meta name="viewport" content="width=device-width, initial-scale=0">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend+Peta:wght@100;300&display=swap" rel="stylesheet"><script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<style>
+@media print {
+   #invoice{
+        width: 0pt;
+
+        margin: 30mm 5mm 3mm 40mm;
+          border: 2px solid #000;
+        /* change the margins as you want them to be. */
+        font-family: 'Lexend Peta', sans-serif;
+
+   }
+}
+table { -pdf-keep-in-frame-mode: shrink;}
+  body {
+
+font-family: 'Lexend Peta', sans-serif;margin-bottom:0em;
+}
+.col-md-6{
+float: left;
+
+  padding: 10px;
+
+}
+#wrapper_1:after {
+  border-left: 6px solid black;
+
+            position:absolute;
+            page-break-inside: avoid;
+
+}
+ {
+
+    #container {
+
+    }
+
+}
+
+</style>
+
+<div id="invoice">
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="row p-5">
+                        <div class="col-md-6">
+                            <img src="{% static 'img/logo.png' %}" style="width:70px;height:70px;margin-top:-50px;">
+
+                        </div>
+                      <div class="col-md-6 text-left" style="margin-top:-50px;margin-left:0px;margin-right:0em;margin-bottom:-1em;" >
+                        <p style="font-weight:bold;font-size:12px;font-family: 'Lexend Peta', sans-serif;margin-bottom:0em;margin-left:0px;">Pothigai Power Solutions Pvt Ltd</p>
+                        <p style="margin-bottom:0em;font-size:10px;font-family: 'Lexend Peta', sans-serif;margin-bottom:0em;margin-left:0px;">Pothigai Bhavan ,3c,Gandhi Nagar,</p>
+                        <p  style="margin-bottom:0em;font-size:10px;font-family: 'Lexend Peta', sans-serif;margin-bottom:0em;margin-left:0px;">Urapakkam-603210,</p>
+                        <p  style="margin-bottom:0em;font-size:10px;font-family: 'Lexend Peta', sans-serif;margin-bottom:0em;margin-left:0px;">Chennai,TamilNadu,</p>
+                        <p  style="margin-bottom:0em;font-size:10px;font-family: 'Lexend Peta', sans-serif;margin-bottom:0em;margin-left:0px;">Cell: 9790874758</p>
+                      </div>
+</div>
+                   <hr style="margin-top:-40px;">
+<div>
+  <p style="text-align: center;font-weight:bold;font-size:9px;font-family: 'Lexend Peta', sans-serif;margin-bottom:0em;">{{inwardtype}} GATEPASS</p>
+</div>
+
+
+                    <hr class="md">
+
+
+                    <div class="row pb-5">
+                        <div class="col-md-5">
+                            <p class="font-weight-bold "style="font-size:9px;margin-bottom:0em;margin-left:1em;">Supplier Information</p>
+                            <p class="mb-1" style="font-size:9px;margin-top:-0px;margin-left:1em;">{{goodsbroughtfromby}}</p>
+
+                        </div>
+                        <div class="col-md ",style="margin-right:-100px;width:%;">
+
+                            <p class="mb-1" ><span style="font-weight:bold;font-size:9px ">Goods Brought in By: </span><div style="font-size:10px;margin-top:-1px; ">{{goodsbroughtby}}</div></p>
+                            <p class="mb-1" style="font-size:9px;margin-top:-10px; "><span  style="font-weight:bold;font-size:9px;margin-top:-10px;">Vehicle No:</span> {{fromvehicleno}}</p>
+                            <p class="mb-1" style="font-size:9px "><span  style="font-weight:bold;font-size:9px">Invoice No:</span> {{invoiceno}}</p>
+                            <p class="mb-1" style="font-size:9px "><span  style="font-weight:bold;font-size:9px">DC No:</span> {{dc}}</p>
+                        </div>
+
+                        <div class="col-md ";style="margin-top:0px;width:0%;font-size:9px;">
+                            <p   class="mb-1"style="margin-top:0px;font-size:9px;"><span class="font-weight-bold ">Gate Pass No:</span> {{incode}}</p>
+                            <p  class="mb-1" style="margin-top:0px;font-size:9px;"><span class="font-weight-bold ">Date: </span> {{datetime}}</p>
+
+
+
+                        </div>
+                    </div>
+                    <hr style="margin-top:-45px;">
+
+                    <div class="row " style="height:530px;">
+                        <div class="col">
+                            <table class="table" style="margin-left:0em;">
+                                <thead style=";font-size:9px;margin-top:-10px;">
+                                    <tr style="font-size:9px;margin-left:30em;">
+                                        <th class="border-0  font-weight-bold" style="margin-left:70em;">ID</th>
+
+                                        <th class="border-0  font-weight-bold">Description</th>
+                                        <th class="border-0 font-weight-bold">Quantity</th>
+
+                                    </tr>
+                                </thead>
+                                 <tbody style="font-size:7px;">
+			{% for item in lineitem %}
+          <tr>
+            <td class="no" style="margin-left:-70px;">{{forloop.counter}}</td>
+            <td class="desc">{{item.Description}}</td>
+
+            <td class="qty">{{item.Qty}}</td>
+
+
+		  </tr>
+
+		  {% endfor %}
+        </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <hr style="margin-top:-20px;">
+
+                    <div class="d-flex flex-row-reverse " style="float:left;column-count: 2;">
+                        <div class=" px text-left" style="float:left">
+
+
+                        </div>
+
+                        <div class="py-3 px-5 text-right">
+
+                                                   <!-- <p class="font-weight-light" style=" inline-size: 500px;">For Pothigai Power Solutions Pvt Ltd</p> -->
+                                                </div>
+
+                                                <div class="py-2">
+
+                                                 <p style="font-size:10px;margin-top:130px;margin-left:70%;width:200px;"> Authorized Signature</p>
+
+                                                </div>
+                        <div class="py-3  text-left" style="float:left;" id="wrapper_1">
+
+                            <p class="mb" style="font-size:9px;"><span  style="font-weight:bold; inline-size: min-content;margin-left:1em;">Company's PAN No: </span> AAHCP7526Q</p><hr style="margin-left:auto;margin-right:auto;width:190%;">
+                            <p class="mb" style="font-size:9px;"><span  style="font-weight:bold; inline-size: 2px;margin-left:1em;">Company's GST No: </span> 33AAHCP7526Q1ZT</p><hr style="margin-left:auto;margin-right:auto;width:190%;">
+                            <p class="mb" style="font-size:9px; width:60%;"><span  style="font-weight:bold;margin-left:1em;">Note: </span> In Case of returnable material,the bearer/contractor
+                                shall bring this copy with the material</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+</body>
+
+
+
+<script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+<script src="{%  static 'js/html2canvas.min.js' %}"></script>
+<script src="{%  static 'js/html2pdf.min.js' %}"></script>
+<script>
+    function generatePDF(){
+        const element=document.getElementById("invoice");
+
+       var opt = {
+  margin:       0.2,
+  filename:     '{{incode}}.pdf',
+  image:        { type: 'jpeg', quality: 0.98 },
+  html2canvas:  { scale: 2.0 },
+  jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+};
+
+// New Promise-based usage:
+html2pdf().set(opt).from(element).save();
+        }
+
+</script>
